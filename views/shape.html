@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas2"></canvas>
+<canvas id="myCanvas3"></canvas>
+<script>
+//绘制多边形
+    var c=document.getElementById("myCanvas2");
+    var ctx=c.getContext("2d");
+    createShape(ctx,{num:6,x:80,y:30,r:25})
+    /**
+     *
+     * @param ctx
+     * @param conf(多边形的坐标，多边形圆半径，fillStyle：需要填充的颜色，strokeStyle：需要描边的颜色)
+     */
+    function createShape(ctx,conf){
+//        多边形角度
+        var x=conf.x||0;
+        var y=conf.y||0;
+        var r=conf.r||5;
+        var num=conf.num||3;
+        var startX=x+r*Math.cos(2*Math.PI*0/num)
+        var startY=y+r*Math.sin(2*Math.PI*0/num)
+        console.log(startX,startY)
+        ctx.beginPath()
+        ctx.moveTo(startX,startY)
+        for(var i=1;i<=num;i++){
+           var newX=x+r*Math.cos(2*Math.PI*i/num)
+            var newY=y+r*Math.sin(2*Math.PI*i/num)
+            console.log(newX,newY)
+            ctx.lineTo(newX,newY)
+        }
+        ctx.closePath()
+        ctx.stroke();
+
+
+
+
+    }
+</script>
+</body>
+</html>

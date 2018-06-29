@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<canvas id="myCanvas2"></canvas>
+<script>
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+
+    // 创建渐变
+    var grd=ctx.createLinearGradient(0,0,200,0);
+    grd.addColorStop(0,"red");
+    grd.addColorStop(0.1,"blue");
+    grd.addColorStop(0.2,"yellow");
+    grd.addColorStop(0.3,"green");
+    grd.addColorStop(0.4,"orange");
+    grd.addColorStop(0.5,"pink");
+    grd.addColorStop(0.6,"purple");
+    grd.addColorStop(0.7,"khaki");
+    grd.addColorStop(0.8,"black ");
+    grd.addColorStop(0.9,"gray");
+    grd.addColorStop(1,"white");
+
+    // 填充渐变
+    ctx.strokeStyle=grd;
+    ctx.strokeRect(10,10,150,80);
+//    图二
+
+    var c=document.getElementById("myCanvas2");
+    var ctx=c.getContext("2d");
+
+    // 创建渐变
+    var grd=ctx.createLinearGradient(0,0,200,0);
+    grd.addColorStop(0,"red");
+    grd.addColorStop(0.1,"blue");
+    grd.addColorStop(0.2,"yellow");
+    grd.addColorStop(0.3,"green");
+    grd.addColorStop(0.4,"orange");
+    grd.addColorStop(0.5,"pink");
+    grd.addColorStop(0.6,"purple");
+    grd.addColorStop(0.7,"khaki");
+    grd.addColorStop(0.8,"black ");
+    grd.addColorStop(0.9,"gray");
+    grd.addColorStop(1,"white");
+
+    // 填充渐变
+    ctx.fillStyle=grd;
+    ctx.fillRect(10,10,150,80);
+</script>
+</body>
+</html>

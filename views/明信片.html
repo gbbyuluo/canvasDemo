@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport"-->
+          <!--content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"/>-->
+    <title>Title</title>
+    <style>
+        body,html{
+            　　width: 100%;
+            　　height: 100%;
+        }
+        #myQrcontainer,#canvas_box,#imgShow{
+            　　width: 100%;
+            　　height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="myQrcontainer">
+    　　<canvas id="canvas_box"></canvas>
+    　　<img src="" id="imgShow"/>
+</div>
+<script>var _that =this;
+function roundedRect(ctx,x,y,width,height,radius){
+    ctx.beginPath();
+    ctx.moveTo(x,y+radius);
+    ctx.lineTo(x,y+height-radius);
+    ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
+    ctx.lineTo(x+width-radius,y+height);
+    ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+    ctx.lineTo(x+width,y+radius);
+    ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
+    ctx.lineTo(x+radius,y);
+    ctx.quadraticCurveTo(x,y,x,y+radius);
+    ctx.stroke();
+};
+function drawQrcode(){
+    var nWidth = document.body.clientWidth,//屏幕可视区域 宽度
+        nHeight = document.body.clientHeight,//屏幕可视区域 高度
+        _canvasWidth = document.body.clientWidth*2,//画布 宽度
+        _canvasHeight = document.body.clientHeight*2;//画布 高度
+    //开始画图，获取上下文；
+    var _canvas = document.getElementById("canvas_box");
+    _canvas.width = _canvasWidth;
+    _canvas.height = _canvasHeight;
+    var _context = _canvas.getContext('2d');
+    //背景
+    _context.fillStyle="#f3af4c";
+    _context.fillRect(0,0,nWidth*2,nHeight*2);
+    //白色矩形部分
+    _context.moveTo(40,203);
+    _context.strokeStyle = 'rgba(255,255,255,1)';
+    _context.fillStyle = 'rgba(255,255,255,1)';
+    _that.roundedRect(_context,40,70*2,335*2,489*2,10*2);
+    _context.fill();
+    _context.closePath();
+    var _imagehead = new Image();//头像
+    //如果有跨域问题，请给img对象添加如下属性
+    _imagehead.crossOrigin="anonymous";
+    _imagehead.src = 'https://wx.qlogo.cn/mmopen/vi_32/EXjWCiadibxlibazXia4YHDBQdYSc4YPAFCBRIuhiaVotERoEiaZ7YKfN4UyWh2sGjicMBaJZucwgZnGMezZfib7U9Uaow/132';
+    _imagehead.onload = function(){
+        _context.save(); // 保存当前_context的状态
+        _context.beginPath();
+        _context.moveTo(((nWidth)/2+40/375*nWidth)*2,70.28/603*nHeight*2);
+        _context.lineWidth="20";
+        //画出圆
+        _context.arc(nWidth,70.28/603*nHeight*2,40/375*nWidth*2,0,2*Math.PI,true);
+        //圆有个边框
+        _context.lineWidth=20;
+        _context.strokeStyle = 'rgba(255,197,108,14)';
+        _context.fill();
+        _context.stroke();
+        //裁剪上面的圆形
+        _context.clip();
+        // 在刚刚裁剪的园上画图
+        _context.drawImage(_imagehead, (nWidth/2-40)*2, 30*2, 90*2, 90*2);
+        _context.restore();
+        _context.stroke();
+        //头像下面的文字
+        _context.beginPath();
+        _context.textAlign = "center";
+        //设置字体
+        _context.font = '30px Arial';
+        _context.lineWidth = 1.0;
+        _context.fillStyle = 'rgb(73,73,73)';
+        _context.fillText("雨昕", nWidth, 150*2);
+
+
+
+        //onload是异步加载，所以要等第一个onload 加载完毕再画第二张图片
+        //代言文字图片
+        var _imagetext = new Image();
+        //解决跨域，如果有跨域错误信息一定要加此属性；
+        _imagetext.crossOrigin="anonymous";
+        _imagetext.src ='https://cdn.kaishuhezi.com/kstory/activity_flow/image/a0364809-6289-474e-a5da-4aca336541cb.png';
+        _imagetext.onload =function(){
+            _context.save(); // 保存当前_context的状态
+            _context.drawImage(_imagetext, (nWidth-200)/2*2, 170*2,200*2,25*2);
+            _context.stroke();//
+            _context.closePath();
+
+            //canvas 画完图 一定要生成图片流，作为img 的src属性值，同时隐藏canvas，只展示img 就ok了，在手机上试试长按保存功能吧
+
+            var _imgSrc = _canvas.toDataURL("image/png",1);
+            _canvas.style.display="none";
+            var imgShow = document.getElementById('imgShow');
+            imgShow.setAttribute('src', _imgSrc);
+        }
+    }
+}
+drawQrcode();</script>
+</body>
+</html>
